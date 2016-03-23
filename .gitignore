@@ -1,0 +1,17 @@
+.Rproj.user
+.Rhistory
+.RData
+.BatchJobs.R
+
+util/
+
+installingPackages.R
+testingScript.R
+TODO
+autoHyperBot-files/
+test-files/
+.Rbuildignore
+autoHyperBot.Rproj
+
+DESCRIPTION
+NAMESPACE
