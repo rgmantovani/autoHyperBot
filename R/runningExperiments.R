@@ -14,9 +14,10 @@ runningBatchExperiments = function() {
 
   catf(" * Loading OML tasks ...")
   all.tasks = gettingActiveOMLTasks()
+
   measures = c("predictive_accuracy", 
-    "usercpu_time_millis_testing", 
-    "usercpu_time_millis_training")
+        "usercpu_time_millis_testing", 
+        "usercpu_time_millis_training")
  
   # Creating new jobs
   new.jobs = generatingExperiment(
@@ -28,14 +29,14 @@ runningBatchExperiments = function() {
     tag = "OpenML-100-collection"
   )
 
-  # checar se é a primeira submissão
+  # check in if the first submission
   if( length(findDone(reg)) == 0 ) {
     catf(" * First execution of the experiments ...")
   } else {
-    catf(" * Remaning jobs or new ones ...")
+    catf(" * Remaining jobs or new ones ...")
   }
  
-  # Running whats is not done
+  # Running what is not done
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
  
   catf(" * Submitting all jobs ...")

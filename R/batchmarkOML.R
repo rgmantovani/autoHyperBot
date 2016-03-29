@@ -1,16 +1,16 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-batchmarkOML = function(reg, task.id, measures, repls = 1L, overwrite = FALSE, tag = "") {
+batchmarkOML = function(reg, task.id, measures, tag, repls = 1L, overwrite = FALSE) {
   
   BatchExperiments:::checkExperimentRegistry(reg)
   
   if ("mlr" %nin% names(reg$packages)) {
-    stop("mlr is required on the slaves, please add mlr via'addRegistryPackages'")
+    stop("mlr is required on the slaves, please add mlr via 'addRegistryPackages'")
   }
 
   if ("OpenML" %nin% names(reg$packages)) {
-    stop("OpenML is required on the slaves, please add OpenML via'addRegistryPackages'")
+    stop("OpenML is required on the slaves, please add OpenML via 'addRegistryPackages'")
   }
 
   assertCount(repls)
