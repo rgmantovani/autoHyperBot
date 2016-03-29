@@ -1,14 +1,13 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-generatingExperiment = function(reg, task.ids, measures, 
-  repls = 1L, overwrite = FALSE, tag = NULL) {
+generatingExperiment = function(reg, task.ids, measures, tag, repls = 1L, overwrite = FALSE) {
 
   # calling batchmark for each task id
   aux = lapply(task.ids, function(task.id) {
     exec = batchmarkOML(
       reg = reg, 
-      task.id = task.id, 
+      task.id = task.id,
       measures = measures,
       repls = repls, 
       overwrite = overwrite,

@@ -8,7 +8,7 @@ util/
 installingPackages.R
 testingScript.R
 TODO
-autoHyperBot-files/
+hyperBot-files/
 test-files/
 .Rbuildignore
 autoHyperBot.Rproj

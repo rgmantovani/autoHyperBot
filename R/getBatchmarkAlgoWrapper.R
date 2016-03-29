@@ -10,7 +10,7 @@ getBatchmarkAlgoWrapper = function(learner, tag = NULL) {
     obj$flow$flow.id = flow.id 
     obj$run$flow$flow.id = flow.id
    
-    new.run.id = uploadOMLRun(run = obj$run)
+    new.run.id = uploadOMLRun(run = obj)
     tagOMLObject(id = new.run.id, object = "run", tags = c("mlr", tag))
 
     values = getBMRAggrPerformances(obj$bmr, as.df = TRUE)

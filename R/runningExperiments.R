@@ -4,7 +4,7 @@
 runningBatchExperiments = function() {
 
   reg = makeExperimentRegistry(
-    id = "test", 
+    id = "hyperBot", 
     packages = c("ParamHelpers", "mlr", "OpenML"), 
     src.dirs = "R/"
   )
@@ -14,7 +14,9 @@ runningBatchExperiments = function() {
 
   catf(" * Loading OML tasks ...")
   all.tasks = gettingActiveOMLTasks()
-  measures = c("predictive_accuracy", "build_cpu_time")
+  measures = c("predictive_accuracy", 
+    "usercpu_time_millis_testing", 
+    "usercpu_time_millis_training")
  
   # Creating new jobs
   new.jobs = generatingExperiment(
@@ -23,8 +25,8 @@ runningBatchExperiments = function() {
     measures = measures,
     overwrite = TRUE,
     repls = 1,
-    tag = NULL
-  }
+    tag = "OpenML-100-collection"
+  )
 
   # checar se é a primeira submissão
   if( length(findDone(reg)) == 0 ) {
