@@ -1,15 +1,16 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-gettingMlrClassifLearners = function(task.id, measures) {
+getAllPossibleLearners = function(task.id, measures) {
 
   temp.task = getOMLTask(task.id = task.id)
 
+  # OML task has no evaluation measure, but it needs at least one measure defined 
   if(length(temp.task$input$evaluation.measures) == 0) {
     temp.task$input$evaluation.measures = measures
   }
 
-  # Datasets with no Class target, but it has on the task
+  # Dataset from the task has no target feature, but needs at least one to be converted into a mlr task
   if (length(temp.task$input$data.set$target.features) == 0) {
     temp.task$input$data.set$target.features = temp.task$input$target.features
   }
@@ -18,6 +19,16 @@ gettingMlrClassifLearners = function(task.id, measures) {
   learners.list = listLearners(obj$mlr.task, create = TRUE, properties = "prob")
 
   return(learners.list)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+getPredefinedLearners = function() {
+
+  learners.list = lapply(predefined.learners, makeLearner, predict.type = "prob")
+  return(learners.list)
+  
 }
 
 # -------------------------------------------------------------------------------------------------

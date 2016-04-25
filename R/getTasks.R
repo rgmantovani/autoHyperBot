@@ -4,6 +4,8 @@
 getTaggedTasks = function(tag) {
 
   tasks = listOMLTasks(tag = tag)
+
+  # From lower to higher problems
   tasks$dim = tasks$NumberOfInstances * tasks$NumberOfFeatures
   tasks = tasks[ order(tasks$dim, decreasing = FALSE), ]
 
@@ -13,7 +15,22 @@ getTaggedTasks = function(tag) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-gettingActiveOMLTasks = function() {
+getPredefinedTasks = function() {
+
+  temp.tasks = listOMLTasks(status = "active")
+  tasks = temp.tasks[temp.tasks$task.id %in% predefined.task.ids,]
+
+  # From lower to higher problems
+  tasks$dim = tasks$NumberOfInstances * tasks$NumberOfFeatures
+  tasks = tasks[ order(tasks$dim, decreasing = FALSE), ]
+
+  return(tasks$task.id)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+getActiveOMLTasksWithCriteria = function() {
 
   tasks = listOMLTasks(status = "active")
 

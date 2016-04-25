@@ -2,9 +2,8 @@
 .Rhistory
 .RData
 .BatchJobs.R
-
 util/
-
+tests/
 installingPackages.R
 testingScript.R
 TODO
@@ -12,6 +11,5 @@ hyperBot-files/
 test-files/
 .Rbuildignore
 autoHyperBot.Rproj
-
 DESCRIPTION
 NAMESPACE
