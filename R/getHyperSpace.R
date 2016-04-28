@@ -1,12 +1,15 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getBatchmarkTaskWrapper = function(task.id, measures) {
-  
-  task = getOMLTask(task.id = task.id)
-  filled.task = fillOMLTask(task = task, measures = measures)
+getHyperSpace = function(learner, ...) {
 
-  return(filled.task)
+  name = sub('classif.', '', learner$id)
+  substring(name, 1, 1) = toupper(substring(name, 1, 1)) 
+	
+  fn.space = get(paste0("get", name , "Space"))
+  par.set = fn.space(...)
+  return(par.set)
+
 }
 
 # -------------------------------------------------------------------------------------------------

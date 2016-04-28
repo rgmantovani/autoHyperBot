@@ -1,39 +1,54 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-runningBatchExperiments = function() {
+runningBatchExperiments = function(setup) {
 
+  if(setup %nin% c("defaults", "tuning")) {
+    stopf("Setup option not valid: choose between \'defaults\' or \'tuning\'")
+  }
+  
   reg = makeExperimentRegistry(
-    id = "hyperBot", 
+    id = paste0("hyperBot", R.utils::capitalize(setup)), 
     packages = c("ParamHelpers", "mlr", "OpenML"), 
     src.dirs = "R/"
   )
 
-  # resources (walltime = 8 hours, memory = 10GB)
+  # Resources (walltime = 8 hours, memory = 10GB)
   res = list(walltime = 8*60*60, memory = 10*1024) 
 
   catf(" * Loading OML tasks ...")
-  all.tasks = gettingActiveOMLTasks()
+  tasks = getTaggedTasks(tag = "study_14")
+  df.tasks = getTaggedTasks(tag = "study_7")
+
+  # Running the tasks (with default) that were not run before
+  if(setup == "defaults") {
+    tasks = setdiff(tasks, df.tasks)
+    tag = "defaults"  
+  } else {
+    tag = "OpenML-classification-v1"
+  }
 
   measures = c("predictive_accuracy", 
-        "usercpu_time_millis_testing", 
-        "usercpu_time_millis_training")
+    "usercpu_time_millis_testing", 
+    "usercpu_time_millis_training"
+  )
  
   # Creating new jobs
-  new.jobs = generatingExperiment(
-    reg = reg,
-    task.ids = all.tasks,
-    measures = measures,
+  new.jobs = settingExperiment(
+    reg       = reg,
+    task.ids  = tasks,
+    measures  = measures,
+    setup     = setup,
     overwrite = TRUE,
-    repls = 1,
-    tag = "OpenML-100-collection"
+    repls     = 1,
+    tag       = tag
   )
 
-  # check in if the first submission
+  # Checking if is the first submission
   if( length(findDone(reg)) == 0 ) {
     catf(" * First execution of the experiments ...")
   } else {
-    catf(" * Remaining jobs or new ones ...")
+    catf(" * There are remaining jobs or new ones ...")
   }
  
   # Running what is not done
@@ -43,13 +58,17 @@ runningBatchExperiments = function() {
   submitJobs(reg = reg, ids = all.jobs, resources = res, job.delay = TRUE)
   status = waitForJobs(reg = reg, ids = all.jobs)
 
-  catf(" * Saving results ...")
-  done.jobs = findDone(reg)
-  results = getReduceResults(reg, done.jobs)
-  save(results, file = "finalJobResults.RData")
+  # catf(" * Saving results ...")
+  # done.jobs = findDone(reg)
   catf(" * Done.")
 
 }
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+# results = getReduceResults(reg, done.jobs)
+  # save(results, file = "finalJobResults.RData")
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

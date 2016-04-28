@@ -8,24 +8,17 @@ library("mlr")
 library("BatchExperiments")
 
 # mlr and OpenML configurations
-#TODO: change the apikey to run experiments
 saveOMLConfig(apikey = "76444ac061f2b76258c96f680f0c6ae0", overwrite = TRUE)
-setOMLConfig(verbosity = 0)
+setOMLConfig(arff.reader = "RWeka")
 setOMLConfig(confirm.upload = FALSE)
-configureMlr(show.info = FALSE)
+configureMlr(show.info = TRUE)
 
 # Predefined learners for the experiments
 predefined.learners = c("classif.svm", "classif.rpart", "classif.gbm", "classif.kknn", 
-   "classif.nnTrain", "classif.naiveBayes", "classif.glmnet", "classif.ranger")
+  "classif.nnTrain", "classif.naiveBayes", "classif.glmnet", "classif.ranger")
 
-# Predefined tasks for the experiments
-predefined.task.ids = c(2075,3896,7592,9911,10090,3549,3560,2,3979,3992,3999,3971,14964,3019,9909,
-  9908,9902,9904,9906,9903,9905,11,14965,10093,14966,10101,15,21,9979,14967,14971,9980,23,9981,
-  3567,29,31,14968,37,7307,14951,219,2079,3524,9985,9986,14969,3891,14970,9970,9971,6566,3543,
-  3481,3510,3904,3917,3913,3946,3948,3,3531,3528,6,9976,3954,12,14,16,18,20,22,9950,3492,3493,3494,
-  3899,24,3950,9977,3527,3536,3521,3529,5511,9954,9955,9956,28,3962,3995,3968,3964,3973,4000,3972,
-  9978,3918,3903,3902,32,14952,9952,3561,9957,2074,3485,36,9964,3021,41,43,45,9967,3889,3512,9968,
-  49,5497,53,3022,9960,58,9946,3504,9914)
+sel.cols = c("run.id", "task.id", "flow.id", "predictive.accuracy", 
+  "usercpu.time.millis.training", "usercpu.time.millis.testing")
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

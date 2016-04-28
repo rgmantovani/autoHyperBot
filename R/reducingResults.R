@@ -1,7 +1,8 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getReduceResults = function(reg, job.ids) {
+# Reducing results from a "default" setup
+reduceDefaultResults = function(reg, job.ids) {
 
   df = reduceResultsExperiments(
     reg = reg,
@@ -10,10 +11,16 @@ getReduceResults = function(reg, job.ids) {
       return(res)
     }
   )
-
-  colnames(df)[7:9] = c("pred.accuracy", "training.time", "testing.time") 
-
   return(df)
+}
+
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+# TODO: add method
+reduceTunedResults = function(reg, job.ids) {
+
 }
 
 # -------------------------------------------------------------------------------------------------

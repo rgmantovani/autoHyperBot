@@ -1,25 +1,33 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-batchmarkOML = function(reg, task.id, measures, tag, repls = 1L, overwrite = FALSE) {
+#TODO: default values for measures and tag?
+
+batchmarkOML = function(reg, task.id, measures, setup, 
+  tag, repls = 1L, overwrite = FALSE) {
   
   BatchExperiments:::checkExperimentRegistry(reg)
   
-  if ("mlr" %nin% names(reg$packages)) {
-    stop("mlr is required on the slaves, please add mlr via 'addRegistryPackages'")
+  if ( any(c("mlr", "OpenML") %nin% names(reg$packages)) ) {
+    stop("\'mlr\' and \'OpenML\' are required on the slaves, please add them via 'addRegistryPackages'")
   }
 
-  if ("OpenML" %nin% names(reg$packages)) {
-    stop("OpenML is required on the slaves, please add OpenML via 'addRegistryPackages'")
-  }
-
+  # TODO: more assertions ?
   assertCount(repls)
   assertFlag(overwrite)
   
-  learners = gettingMlrClassifLearners(task.id = task.id, measures = measures)
+  # Run all available learners if 'defaults' option was defined
+  if(setup == "defaults"){
+    learners = getAllPossibleLearners(task.id = task.id, measures = measures)
+  } else{
+    learners = getPredefinedLearners()
+  }
+
+  #just for tests
+  learners = learners[1:3]
   learners.names = vcapply(learners, "[[", "id")
 
-  # adding problems (tasks)
+  # Adding problems (tasks)
   problem.designs = Map(
     f = function(id, task.id, seed) {
       task = getBatchmarkTaskWrapper(task.id, measures)
@@ -32,6 +40,7 @@ batchmarkOML = function(reg, task.id, measures, tag, repls = 1L, overwrite = FAL
     seed = reg$seed + seq_along(task.id)
   )
   
+  # TODO: Add setup as an argument here
   # Adding algorithms (learners)
   algorithm.designs = Map(
     f = function(id, learner, tag) {
@@ -41,10 +50,11 @@ batchmarkOML = function(reg, task.id, measures, tag, repls = 1L, overwrite = FAL
     },
     id = learners.names, 
     learner = learners,
+    # setup = setup,
     tag = tag
   )
 
-  # creating jobs
+  # Creating jobs
   job.ids = addExperiments(reg = reg, prob.designs = problem.designs, 
     algo.designs = algorithm.designs, repls = repls, skip.defined = TRUE)
 

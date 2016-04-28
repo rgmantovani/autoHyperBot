@@ -1,18 +1,14 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-main = function() {
+renameDfColumns = function(values) {
 
-  devtools::load_all()
-  # runningBatchExperiments(setup = "tuning")
-  runningBatchExperiments(setup = "defaults")
+  colnames(values)[grep("acc.test.mean", colnames(values))] = "predictive.accuracy"
+  colnames(values)[grep("timetrain.test.sum", colnames(values))] = "usercpu.time.millis.training"
+  colnames(values)[grep("timepredict.test.sum", colnames(values))] = "usercpu.time.millis.testing"
 
+  return(values)
 }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-main()
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

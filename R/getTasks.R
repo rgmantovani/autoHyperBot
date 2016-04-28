@@ -1,11 +1,14 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
+# All the methods retunrs tasks order from lower to higher problems
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+ 
 getTaggedTasks = function(tag) {
 
   tasks = listOMLTasks(tag = tag)
-
-  # From lower to higher problems
   tasks$dim = tasks$NumberOfInstances * tasks$NumberOfFeatures
   tasks = tasks[ order(tasks$dim, decreasing = FALSE), ]
 
@@ -15,12 +18,10 @@ getTaggedTasks = function(tag) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getPredefinedTasks = function() {
+getPredefinedTasks = function(predefined.task.ids) {
 
   temp.tasks = listOMLTasks(status = "active")
-  tasks = temp.tasks[temp.tasks$task.id %in% predefined.task.ids,]
-
-  # From lower to higher problems
+  tasks = temp.tasks[temp.tasks$task.id %in% predefined.task.ids, ]
   tasks$dim = tasks$NumberOfInstances * tasks$NumberOfFeatures
   tasks = tasks[ order(tasks$dim, decreasing = FALSE), ]
 
