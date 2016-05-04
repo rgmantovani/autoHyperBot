@@ -8,8 +8,6 @@
 #   3. [optional] Impute the missing values
 #   4. [optional] 1-to-N enconde: converting categorical features to numeric ones
 
-# TODO: Rename and move this function to another file
-
 fillOMLTask = function(task, measures) {
 
   task$input$evaluation.measures = measures
@@ -18,7 +16,9 @@ fillOMLTask = function(task, measures) {
   }
 
   new.task = imputeMissingValues(oml.task = task)
-  new.task = OneToNEncoding(oml.task = new.task) 
+
+  # FIX ME: fix the function 1-to-N encoding
+  # new.task = OneToNEncoding(oml.task = new.task) 
 
   return(new.task)
 }

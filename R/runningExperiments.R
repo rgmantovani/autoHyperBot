@@ -25,18 +25,18 @@ runningBatchExperiments = function(setup) {
     tasks = setdiff(tasks, df.tasks)
     tag = "defaults"  
   } else {
-    tag = "OpenML-classification-v1"
+    tag = "tuned"
   }
 
   measures = c("predictive_accuracy", 
     "usercpu_time_millis_testing", 
     "usercpu_time_millis_training"
   )
- 
+
   # Creating new jobs
   new.jobs = settingExperiment(
     reg       = reg,
-    task.ids  = tasks,
+    task.ids  = tasks, 
     measures  = measures,
     setup     = setup,
     overwrite = TRUE,

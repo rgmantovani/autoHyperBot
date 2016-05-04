@@ -13,6 +13,9 @@ setOMLConfig(arff.reader = "RWeka")
 setOMLConfig(confirm.upload = FALSE)
 configureMlr(show.info = TRUE)
 
+# for debuging while coding
+DEBUG = TRUE
+
 # Predefined learners for the experiments
 predefined.learners = c("classif.svm", "classif.rpart", "classif.gbm", "classif.kknn", 
   "classif.nnTrain", "classif.naiveBayes", "classif.glmnet", "classif.ranger")

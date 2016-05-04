@@ -1,8 +1,6 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-#TODO: default values for measures and tag?
-
 batchmarkOML = function(reg, task.id, measures, setup, 
   tag, repls = 1L, overwrite = FALSE) {
   
@@ -16,21 +14,24 @@ batchmarkOML = function(reg, task.id, measures, setup,
   assertCount(repls)
   assertFlag(overwrite)
   
+  # Get Task (just once)
+  task = getOMLTask(task.id = task.id)
+  filled.task = fillOMLTask(task = task, measures = measures)
+
   # Run all available learners if 'defaults' option was defined
   if(setup == "defaults"){
-    learners = getAllPossibleLearners(task.id = task.id, measures = measures)
+    learners = getAllPossibleLearners(filled.task = filled.task)
   } else{
     learners = getPredefinedLearners()
   }
-
-  #just for tests
-  learners = learners[1:3]
+  # learners = learners[1] #just for tests
   learners.names = vcapply(learners, "[[", "id")
 
   # Adding problems (tasks)
   problem.designs = Map(
     f = function(id, task.id, seed) {
-      task = getBatchmarkTaskWrapper(task.id, measures)
+      # task = getBatchmarkTaskWrapper(task.id, measures)
+      task = filled.task
       static = list(task = task)
       addProblem(reg = reg, id = id, static = static, overwrite = overwrite, seed = seed)
       makeDesign(id = id)
