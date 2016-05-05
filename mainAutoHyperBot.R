@@ -4,8 +4,7 @@
 main = function() {
 
   devtools::load_all()
-  # runningBatchExperiments(setup = "tuning")
-  runningBatchExperiments(setup = "defaults")
+  runningBatchExperiments(setup = "defaults") # setup = tuning
 
 }
 
