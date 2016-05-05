@@ -13,11 +13,7 @@ resubmitJobs = function() {
   )
 
   # Resources (walltime = 8 hours, memory = 10GB)
-  res = list(walltime = 8*60*60, memory = 10*1024) 
-
-  measures = c("predictive_accuracy", 
-    "usercpu_time_millis_testing", 
-    "usercpu_time_millis_training")
+  res = list(walltime = (8*60*60), memory = (10*1024)) 
 
   catf(" * There are remaining jobs or new ones ...")
   all.jobs = setdiff(findNotDone(reg), findErrors(reg))
