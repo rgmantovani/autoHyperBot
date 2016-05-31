@@ -31,7 +31,7 @@
   }
 
   tasks = setdiff(tasks, 34536)
-  tasks = tasks[1:10]
+  tasks = tasks[1:3]
 
   measures = c("predictive_accuracy", 
     "usercpu_time_millis_testing", 
@@ -44,8 +44,7 @@
     measures  = measures,
     setup     = setup,
     overwrite = TRUE,
-    repls     = 1,
-    tag       = tag
+    repls     = 1
   )
 
   # # Checking if is the first submission
@@ -60,9 +59,9 @@
   print(all.jobs)
 
   # Call test jobs
-  # for(job in all.jobs){
-  #   testJob(reg = reg, id = job)
-  # }
+  for(job in all.jobs){
+    testJob(reg = reg, id = job)
+  }
 
   # catf(" * Submitting all jobs ...")
   # submitJobs(reg = reg, ids = all.jobs, resources = res, job.delay = TRUE)

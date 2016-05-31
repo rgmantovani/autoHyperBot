@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-settingExperiment = function(reg, task.ids, measures, setup, tag, 
+settingExperiment = function(reg, task.ids, measures, setup, 
   repls = 1L, overwrite = FALSE) {
 
   # Calling batchmark for each task id
@@ -12,7 +12,6 @@ settingExperiment = function(reg, task.ids, measures, setup, tag,
       task.id   = task.id,
       measures  = measures,
       setup     = setup,
-      tag       = tag,
       repls     = repls, 
       overwrite = overwrite
     )

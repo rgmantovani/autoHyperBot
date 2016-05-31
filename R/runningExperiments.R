@@ -23,10 +23,10 @@ runningBatchExperiments = function(setup) {
   # Running the tasks (with default) that were not run before
   if(setup == "defaults") {
     tasks = setdiff(tasks, df.tasks)
-    tag = "defaults"  
-  } else {
-    tag = "tuned"
   }
+
+  #just for test
+  tasks = tasks[1:3]
 
   measures = c("predictive_accuracy", 
     "usercpu_time_millis_testing", 
@@ -41,7 +41,6 @@ runningBatchExperiments = function(setup) {
     setup     = setup,
     overwrite = TRUE,
     repls     = 1,
-    tag       = tag
   )
 
   # Checking if is the first submission
@@ -57,18 +56,9 @@ runningBatchExperiments = function(setup) {
   catf(" * Submitting all jobs ...")
   submitJobs(reg = reg, ids = all.jobs, resources = res, job.delay = TRUE)
   status = waitForJobs(reg = reg, ids = all.jobs)
-
-  # catf(" * Saving results ...")
-  # done.jobs = findDone(reg)
   catf(" * Done.")
 
 }
-
-# -------------------------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------------------------
-
-# results = getReduceResults(reg, done.jobs)
-  # save(results, file = "finalJobResults.RData")
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------

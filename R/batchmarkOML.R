@@ -1,8 +1,8 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-batchmarkOML = function(reg, task.id, measures, setup, 
-  tag, repls = 1L, overwrite = FALSE) {
+batchmarkOML = function(reg, task.id, measures, setup, repls = 1L, 
+  overwrite = FALSE) {
   
   BatchExperiments:::checkExperimentRegistry(reg)
   
@@ -10,7 +10,6 @@ batchmarkOML = function(reg, task.id, measures, setup,
     stop("\'mlr\' and \'OpenML\' are required on the slaves, please add them via 'addRegistryPackages'")
   }
 
-  # TODO: more assertions ?
   assertCount(repls)
   assertFlag(overwrite)
   
@@ -20,9 +19,9 @@ batchmarkOML = function(reg, task.id, measures, setup,
 
   # Run all available learners if 'defaults' option was defined
   if(setup == "defaults"){
-    learners = getAllPossibleLearners(filled.task = filled.task)
+    learners = getAllPossibleLearners(filled.task = filled.task)[1:3]
   } else{
-    learners = getPredefinedLearners()
+    learners = getPredefinedLearners()[1:3]
   }
   # learners = learners[1] #just for tests
   learners.names = vcapply(learners, "[[", "id")
@@ -30,7 +29,6 @@ batchmarkOML = function(reg, task.id, measures, setup,
   # Adding problems (tasks)
   problem.designs = Map(
     f = function(id, task.id, seed) {
-      # task = getBatchmarkTaskWrapper(task.id, measures)
       task = filled.task
       static = list(task = task)
       addProblem(reg = reg, id = id, static = static, overwrite = overwrite, seed = seed)
@@ -44,15 +42,13 @@ batchmarkOML = function(reg, task.id, measures, setup,
   # TODO: Add setup as an argument here
   # Adding algorithms (learners)
   algorithm.designs = Map(
-    f = function(id, learner, tag) {
-      apply.fun = getBatchmarkAlgoWrapper(learner, tag)
+    f = function(id, learner) {
+      apply.fun = getBatchmarkAlgoWrapper(learner)
       addAlgorithm(reg = reg, id = id, fun = apply.fun, overwrite = overwrite)
       makeDesign(id = id)
     },
     id = learners.names, 
-    learner = learners,
-    # setup = setup,
-    tag = tag
+    learner = learners
   )
 
   # Creating jobs

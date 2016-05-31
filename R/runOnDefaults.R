@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-runOnDefaults = function(task, learner, tag = NULL, debug = DEBUG) {
+runOnDefaults = function(task, learner, debug = DEBUG) {
 
   l.name = paste(learner$type, learner$short.name, sep=".")
   flows = listOMLFlows()
@@ -58,11 +58,6 @@ runOnDefaults = function(task, learner, tag = NULL, debug = DEBUG) {
 
     res.df = data.frame(do.call("rbind", results.list))
     values = res.df[which.max(res.df$run.id), ]
-  }
-
-  # In both cases, tag the run ...
-  if(!debug){
-    tagOMLObject(id = values$run.id, object = "run", tags = c("mlr", tag))
   }
 
   return(values)

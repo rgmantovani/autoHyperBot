@@ -16,7 +16,7 @@
 # inner - inner resampling strategy
 # control - tuning control object
 # Run with Tuning
-runWithTuning = function(task, learner = learner, control = NULL, inner = NULL, tag = NULL) {
+runWithTuning = function(task, learner = learner, control = NULL, inner = NULL) {
 
 }
 

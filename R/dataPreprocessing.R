@@ -12,7 +12,7 @@ imputeMissingValues = function(oml.task) {
 
   if(any(is.na(dataset))) {
     cat(" - imputing data\n")
-    temp = mlr::impute(data = dataset, target = oml.task$input$target.features,
+    temp = mlr::impute(dataset, target = oml.task$input$target.features,
       classes = list(numeric = imputeMean(), factor = imputeConstant(const="Missing")))
     dataset = temp$data
     oml.task$input$data.set$data = dataset
